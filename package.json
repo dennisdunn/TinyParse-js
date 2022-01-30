@@ -14,5 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "arcsecond": "^4.1.0"
   }
 }
