@@ -1,39 +1,62 @@
-const { regex, trim, literal, optional, between, number, any, sequence } = require('../lib');
+const L = require('../lib');
 
+/**
+    E -> T E1 .
+    E1 -> sop T E1 | .
+    T -> F T1 .
+    T1 -> pop F T1 | .
+    F -> lpar E rpar | number .
+ */
 
+function sop(ctx) {
+    return L.anyOfChar('+-')(ctx);
+}
 
-const sum = trim(regex(/[-+]/));
-const pro = trim(regex(/[*\/]/));
-const pow = trim(regex(/\^/));
-const lparen = trim(literal('('));
-const rparen = trim(literal(')'));
-const num = trim(number);
+function pop(ctx) {
+    return L.anyOfChar('*/')(ctx);
+}
 
-let E;
-let Ep;
-let T;
-let Tp;
-let P;
-let F;
+function lpar(ctx) {
+    return L.str('\(')(ctx);
+}
 
-E = sequence(T, Ep);
-Ep = optional(sequence(sum, T, Ep));
-T = sequence(P, Tp);
-Tp = optional(sequence(pro, P, Tp));
-P = any(sequence(F, pow, P), F);
-F = any(sequence(lparen, E, rparen), num);
+function rpar(ctx) {
+    return L.str('\)')(ctx);
+}
+
+function number(ctx) {
+    return L.map(L.regex(/[+-]?\d+(\.\d+)?/g), parseFloat)(ctx)
+}
+
+function E(ctx) {
+    return L.sequence(T, E1)(ctx)
+}
+
+function E1(ctx) {
+    return L.optional(L.sequence(sop, T, E1))(ctx)
+}
+
+function T(ctx) {
+    return L.sequence(F, T1)(ctx)
+}
+
+function T1(ctx) {
+    return L.optional(L.sequence(pop, F, T1))(ctx)
+}
+
+function F(ctx) {
+    return L.any(L.sequence(lpar, E, rpar), number)(ctx)
+}
 
 module.exports = {
+    sop,
+    pop,
+    lpar,
+    rpar,
+    number,
     E,
-    Ep,
+    E1,
     T,
-    Tp,
-    P,
-    F,
-    sum,
-    pro,
-    pow,
-    lparen,
-    rparen,
-    num
+    T1,
+    F
 }
