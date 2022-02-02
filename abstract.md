@@ -1,4 +1,4 @@
-Level up Your Parsing
+Practical Parsing: Level Up With Parser Combinators
 ---
 
 - I have a parsing problem.

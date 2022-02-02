@@ -8,25 +8,15 @@ const L = require('../lib');
     F -> lpar E rpar | number .
  */
 
-function sop(ctx) {
-    return L.anyOfChar('+-')(ctx);
-}
+const sop = L.anyOfChar('+-');
 
-function pop(ctx) {
-    return L.anyOfChar('*/')(ctx);
-}
+const pop = L.anyOfChar('*/');
 
-function lpar(ctx) {
-    return L.str('\(')(ctx);
-}
+const lpar = L.str('(');
 
-function rpar(ctx) {
-    return L.str('\)')(ctx);
-}
+const rpar = L.str(')');
 
-function number(ctx) {
-    return L.map(L.regex(/[+-]?\d+(\.\d+)?/g), parseFloat)(ctx)
-}
+const number = L.number;
 
 function E(ctx) {
     return L.sequence(T, E1)(ctx)
@@ -49,14 +39,5 @@ function F(ctx) {
 }
 
 module.exports = {
-    sop,
-    pop,
-    lpar,
-    rpar,
-    number,
-    E,
-    E1,
-    T,
-    T1,
-    F
+    E
 }
