@@ -1,5 +1,7 @@
 const L = require('../lib');
 
+const tag = tag => value => ({ tag, value })
+
 /**
     E -> T E1 .
     E1 -> sop T E1 | .
@@ -38,6 +40,10 @@ function F(ctx) {
     return L.any(L.sequence(lpar, E, rpar), number)(ctx)
 }
 
+function parse(input) {
+    return E(L.context(input));
+}
+
 module.exports = {
-    E
+    parse
 }
