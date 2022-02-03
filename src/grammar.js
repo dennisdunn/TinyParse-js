@@ -16,11 +16,11 @@ const sop = ws(L.anyOfChar('+-'));
 
 const pop = ws(L.anyOfChar('*/'));
 
-const lpar = ws(L.str('('));
+const lpar = ws(L.map(L.str('('), tag('lparen')));
 
-const rpar = ws(L.str(')'));
+const rpar = ws(L.map(L.str(')'), tag('rparen')));
 
-const number = ws(L.number);
+const number = ws(L.map(L.number, tag('number')));
 
 function E(ctx) {
     return L.sequence(T, E1)(ctx)
@@ -39,7 +39,7 @@ function T1(ctx) {
 }
 
 function F(ctx) {
-    return L.any(L.sequence(lpar, E, rpar), number)(ctx)
+    return L.choice(number, L.sequence(lpar, E, rpar))(ctx)
 }
 
 function parse(input) {

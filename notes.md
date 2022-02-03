@@ -18,3 +18,8 @@
 
 # ideas taken from ....
 - https://www.sigmacomputing.com/blog/writing-a-parser-combinator-from-scratch-in-typescript/
+
+# Got Cha!
+
+- be careful with ordering of your parsers in the call to choice(). in F() switch them around and watch
+your stack be blown.
