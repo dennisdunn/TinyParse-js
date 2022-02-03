@@ -1,6 +1,8 @@
 const L = require('../lib');
 
-const tag = tag => value => ({ tag, value })
+const tag = text => value => ({ tag: text.toUpperCase(), value })
+
+const ws = parser => L.sequence(parser, L.ignore(L.optional(L.whitespace)));
 
 /**
     E -> T E1 .
@@ -10,15 +12,15 @@ const tag = tag => value => ({ tag, value })
     F -> lpar E rpar | number .
  */
 
-const sop = L.anyOfChar('+-');
+const sop = ws(L.anyOfChar('+-'));
 
-const pop = L.anyOfChar('*/');
+const pop = ws(L.anyOfChar('*/'));
 
-const lpar = L.str('(');
+const lpar = ws(L.str('('));
 
-const rpar = L.str(')');
+const rpar = ws(L.str(')'));
 
-const number = L.number;
+const number = ws(L.number);
 
 function E(ctx) {
     return L.sequence(T, E1)(ctx)
@@ -45,5 +47,6 @@ function parse(input) {
 }
 
 module.exports = {
-    parse
+    parse,
+    tag
 }
