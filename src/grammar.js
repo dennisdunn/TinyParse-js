@@ -2,7 +2,7 @@ const L = require('../lib');
 
 const tag = text => value => ({ tag: text.toUpperCase(), value })
 
-const ws = parser => L.sequence(parser, L.ignore(L.optional(L.many(L.whitespace))));
+const ws = parser => L.map(L.sequence(parser, L.optional(L.many(L.whitespace))), value => value[0]);
 
 /**
     E -> T E1 .
@@ -14,7 +14,7 @@ const ws = parser => L.sequence(parser, L.ignore(L.optional(L.many(L.whitespace)
 
 const sop = ws(L.map(L.anyOfChar('+-'), tag('sop')));
 
-const pop = ws(L.map(L.anyOfChar('*/'),tag('pop')));
+const pop = ws(L.map(L.anyOfChar('*/'), tag('pop')));
 
 const lpar = ws(L.map(L.str('('), tag('lparen')));
 
