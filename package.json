@@ -1,11 +1,12 @@
 {
-  "name": "parser-combinators",
+  "name": "@dennisdunn/tiny-parse",
   "version": "0.1.0",
-  "description": "Parser combinator library",
+  "description": "Minimal parser combinator library.",
   "main": "./lib/index.js",
   "directories": {
     "lib": "lib"
   },
+  "repository": "https://github.com/dennisdunn/tiny-parse-js",
   "scripts": {
     "test": "jest"
   },
