@@ -2,7 +2,25 @@
 ***Tiny Parse*** Combinator Library
 ===
 
-### Definitions
+About
+---
+***Tiny Parse*** is a parser combinator library in Javascript to provide examples for a presentation at [Stir Trek 2022](https://stirtrek.com).
+
+Installation
+---
+Option #1
+```bash
+npm --registry=https://npm.pkg.github.com install --save tiny-parse 
+```
+
+Option #2
+```bash
+echo @dennisdunn:registry=https://npm.pkg.github.com >> .npmrc
+npm install --save tiny-parse
+```
+
+Definitions
+---
 
 - Parser
     - A function which takes a context object and returns an object representing the structure of the input string.
@@ -14,11 +32,13 @@
     - A function that takes one or more parsers and returns a parser.
     - ```(...parsers) => parser```
 
-### Utility Functions
+Utility Functions
+---
 - context
     - Given an input string, returns a context to pass to a parser.
 
-### Parser Generators
+Parser Generators
+---
 
 - anyOfChar
     - A parser which succeeds when the next character to be parsed is contained in the string argument.
@@ -27,7 +47,8 @@
     - A parser which matches all of the string argument.
     - ```str("hello, world")```
 
-### Parser Combinators
+Parser Combinators
+---
 
 ##### ***Essential Combinators***
 
@@ -57,7 +78,8 @@
     - Concatenate all of the items in the results array.
     - ```join(sequence(digit, many(digit)))```
 
-### Parsers
+Parsers
+---
 - digit
     - ```anyOfChar("0123456789")```
 - lower
@@ -72,8 +94,3 @@
     - ```choice(lower, upper, digit)```
 - whitespace
     - ```anyOfChar(" \t\n\r")```
-
-
-```bash
-npm --registry=https://npm.pkg.github.com install 
-```
