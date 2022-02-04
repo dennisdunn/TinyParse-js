@@ -1,3 +1,4 @@
+
 ***Tiny Parse*** Combinator Library
 ===
 
@@ -58,19 +59,19 @@
 
 ### Parsers
 - digit
-    - ```anyOfChar('0123456789')```
+    - ```anyOfChar("0123456789")```
 - lower
-    - ```anyOfChar('abcdefghijklmnopqrstuvwxyz')```
+    - ```anyOfChar("abcdefghijklmnopqrstuvwxyz")```
 - upper
-    - ```anyOfChar('ABCDEFGHIJKLMNOPQRSTUVWXYZ')```
+    - ```anyOfChar("ABCDEFGHIJKLMNOPQRSTUVWXYZ")```
 - symbols
-    - ```anyOfChar('~!@#$%^&*()_+-={}[]\\|<>,.?/"\'')```
+    - ```anyOfChar("'~!@#$%^&*()_+-={}[]\\|<>,.?/\"")```
 - hexDigit
-    - ```choice(anyOfChar('abcdefABCDEF'), digit)```
+    - ```choice(anyOfChar("abcdefABCDEF"), digit)```
 - alphanum
     - ```choice(lower, upper, digit)```
 - whitespace
-    - ```anyOfChar(' \t\n\r')```
+    - ```anyOfChar(" \t\n\r")```
 
 
 ```bash
