@@ -73,8 +73,6 @@
     - ```anyOfChar(' \t\n\r')```
 
 
-
-
-```
+```bash
 npm --registry=https://npm.pkg.github.com install 
 ```
