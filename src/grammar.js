@@ -2,7 +2,7 @@ const L = require('../lib');
 
 const tag = text => value => ({ tag: text.toUpperCase(), value })
 
-const ws = parser => L.sequence(parser, L.ignore(L.optional(L.whitespace)));
+const ws = parser => L.sequence(parser, L.ignore(L.optional(L.many(L.whitespace))));
 
 /**
     E -> T E1 .

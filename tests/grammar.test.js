@@ -21,7 +21,7 @@ test('parse 2*2+1', () => {
 })
 
 test('parse 2*(1+1)', () => {
-    const r = parse('2*(1+1)');
+    const r = parse('2* (1    +1        )');
     expect(r.result).toStrictEqual([{ tag: 'NUMBER', value: 2 },  { tag: 'POP', value: '*' },{ tag: 'LPAREN', value: '(' }, { tag: 'NUMBER', value: 1 }, { tag: 'SOP', value: '+' }, { tag: 'NUMBER', value: 1 }, { tag: 'RPAREN', value: ')' }])
 
 })
