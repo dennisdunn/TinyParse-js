@@ -60,7 +60,7 @@ Parser Combinators
     - ```many(anyOfChar("0123456789"))```
 - choice 
     - Returns the first parser that succeeds.
-    ```choice(anyOfChar("0123456789"), anyOfChar("abcdef"))```
+    - ```choice(anyOfChar("0123456789"), anyOfChar("abcdef"))```
 - optional
     - Matches the argument 0 or 1 time. Always succeeds,
     potentially returning ```null``` as a result.
@@ -93,4 +93,4 @@ Parsers
 - alphanum
     - ```choice(lower, upper, digit)```
 - whitespace
-    - ```anyOfChar(" \t\n\r")```
+    - ```anyOfChar(" \t\r\n")```
