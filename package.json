@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "Minimal parser combinator library.",
   "main": "./lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "repository": "https://github.com/dennisdunn/tiny-parse-js",
+  "repository": "https://github.com/dennisdunn/tiny-parse-js.git",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "jest"
   },
@@ -16,6 +16,5 @@
   "devDependencies": {
     "jest": "^27.4.7"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
