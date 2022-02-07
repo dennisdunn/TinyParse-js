@@ -10,13 +10,13 @@ Installation
 ---
 Option #1
 ```bash
-npm --registry=https://npm.pkg.github.com install --save tiny-parse 
+npm --registry=https://npm.pkg.github.com install --save @dennisdunn/tiny-parse 
 ```
 
 Option #2
 ```bash
 echo @dennisdunn:registry=https://npm.pkg.github.com >> .npmrc
-npm install --save tiny-parse
+npm install --save @dennisdunn/tiny-parse
 ```
 
 Definitions
