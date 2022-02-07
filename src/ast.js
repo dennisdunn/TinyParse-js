@@ -6,21 +6,15 @@
     F -> lpar E rpar | number .
  */
 
-class AST_Node {
-    constructor(type, value = null) {
-        this.type = type.toUpperCase();
-        if (value) this.value = value;
-    }
+class AST {
+    static lparen = () => new AST_LParen();
+    static rparen = () => new AST_RParen();
+    static sop = value => new AST_BinaryOp(value);
+    static pop = value => new AST_BinaryOp(value);
+    static number = value => new AST_Number(value);
 
-    static lparen = () => new AST_Node('l_paren');
-    static rparen = () => new AST_Node('r_paren');
-    static sop = value => new AST_Node('operator', value);
-    static pop = value => new AST_Node('operator', value);
-    static number = value => new AST_Node('number', value);
-
-    static prod_handler = value => {
+    static handler = value => {
         if (Array.isArray(value)) {
-            // console.log(`prod handler: ${JSON.stringify(value, null, 2)}`)
             switch (value.length) {
                 case 1:
                     return value[0];
@@ -33,8 +27,7 @@ class AST_Node {
         return value;
     };
 
-    static prod_prime_handler = value => {
-        // console.log(`prime handler: ${JSON.stringify(value, null, 2)}`)
+    static p_handler = value => {
         if (Array.isArray(value)) {
             switch (value.length) {
                 case 1:
@@ -53,6 +46,64 @@ class AST_Node {
     };
 }
 
+class AST_Node {
+    constructor(type, value = null) {
+        this.type = type.toUpperCase();
+        if (value) this.value = value;
+    }
+}
+
+class AST_LParen extends AST_Node {
+    constructor() {
+        super('l_paren');
+    }
+
+    eval() {
+        return;
+    }
+}
+
+class AST_RParen extends AST_Node {
+    constructor() {
+        super('r_paren');
+    }
+
+    eval() {
+        return;
+    }
+}
+
+class AST_BinaryOp extends AST_Node {
+    constructor(value) {
+        super('binary_op', value);
+    }
+
+    eval() {
+        const operandA = this.left.eval();
+        const operandB = this.right.eval();
+        switch (this.value) {
+            case '+':
+                return operandA + operandB;
+            case '-':
+                return operandA - operandB;
+            case '*':
+                return operandA * operandB;
+            case '/':
+                return operandA / operandB;
+        }
+    }
+}
+
+class AST_Number extends AST_Node {
+    constructor(value) {
+        super('number', value);
+    }
+
+    eval() {
+        return this.value;
+    }
+}
+
 module.exports = {
-    AST_Node
+    AST
 }
