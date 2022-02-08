@@ -3,8 +3,6 @@ const { AST } = require('./ast');
 
 const ws = parser => L.map(L.sequence(parser, L.optional(L.many(L.whitespace))), value => value[0]);
 
-const between = (...parsers) => L.map(L.sequence(...parsers), value => value[Math.floor(value.length / 2)]);
-
 const sop = ws(L.map(L.anyOfChar('+-'), AST.sop));
 
 const pop = ws(L.map(L.anyOfChar('*/'), AST.pop));
@@ -32,7 +30,7 @@ function T1(ctx) {
 }
 
 function F(ctx) {
-    return L.choice(number, between(lpar, E, rpar))(ctx);
+    return L.choice(number, L.between(lpar, E, rpar))(ctx);
 }
 
 module.exports = {

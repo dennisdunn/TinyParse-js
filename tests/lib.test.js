@@ -5,14 +5,14 @@ test('parse an integer', () => {
     const r = P.number(P.context('123'));
 
     expect(r.isError).toBeFalsy();
-    expect(r.result).toBe(123);
+    expect(r.result).toBe('123');
 })
 
 test('parse a float', () => {
     const r = P.number(P.context('123.123'));
 
     expect(r.isError).toBeFalsy();
-    expect(r.result).toBe(123.123);
+    expect(r.result).toBe('123.123');
 })
 
 test('parse a float sans digits', () => {

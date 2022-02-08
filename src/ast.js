@@ -100,7 +100,7 @@ class AST_Number extends AST_Node {
     }
 
     eval() {
-        return this.value;
+        return parseFloat(this.value);
     }
 }
 
