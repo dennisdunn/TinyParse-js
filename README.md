@@ -2,8 +2,6 @@
 ***Tiny Parse*** Combinator Library
 ===
 
-About
----
 ***Tiny Parse*** is a parser combinator library in Javascript to provide examples for a presentation at [Stir Trek 2022](https://stirtrek.com).
 
 Installation
