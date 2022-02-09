@@ -19,19 +19,6 @@ echo @dennisdunn:registry=https://npm.pkg.github.com >> .npmrc
 npm install --save @dennisdunn/tiny-parse
 ```
 
-Definitions
----
-
-- Parser
-    - A function which takes a context object and returns an object representing the structure of the input string.
-     - ```context => object```
-- Parser Generator
-    - A function that takes a string and returns a parser which parses all or part of that string.
-    - ```string => parser```
-- Parser Combinator
-    - A function that takes one or more parsers and returns a parser.
-    - ```(...parsers) => parser```
-
 Utility Functions
 ---
 - context
@@ -65,9 +52,12 @@ Parser Combinators
     - Matches the argument 0 or 1 time. Always succeeds,
     potentially returning ```null``` as a result.
     - ```optional(anyOfChar(" \t\r\n"))```
+- between
+    - Matches all of the arguments and returns the result of the middle parser.
+    - ```between(open_bracket, expression, close_bracket)```
 - map
     - Tries to match the first argument and if successful, applies the second argument to the result.
-    - ```map(many(anyOfChar("0123456789")), parseFloat)```
+    - ```map(join(many(anyOfChar("0123456789"))), parseFloat)```
 
 ##### ***Utility Combinators***
 
