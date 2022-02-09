@@ -94,3 +94,5 @@ Parsers
     - ```choice(lower, upper, digit)```
 - whitespace
     - ```anyOfChar(" \t\r\n")```
+- number
+    - ```sequence(digit, many(digit), optional(sequence(str("."), digit, many(digit)))```
