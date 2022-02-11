@@ -1,93 +1,112 @@
 
 const P = require('../lib');
 
-test('parse an integer', () => {
-    const r = P.number(P.context('123'));
+test('peek a stream, length=1', () => {
+    const stream = new P.Stream('hello, world');
+    const pos = stream.position;
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe(123);
+    expect(stream.peek()).toBe('h');
+    expect(stream.position).toEqual(pos)
 })
 
-test('parse a float', () => {
-    const r = P.number(P.context('123.123'));
+test('peek a stream, length=5', () => {
+    const stream = new P.Stream('hello, world');
+    const pos = stream.position;
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe(123.123);
+    expect(stream.peek(5)).toBe('hello');
+    expect(stream.position).toEqual(pos)
 })
 
-test('parse a float sans digits', () => {
-    const r = P.number(P.context('.'));
+test('read a stream, length=5', () => {
+    const stream = new P.Stream('hello, world');
+    const pos = stream.position;
 
-    expect(r.isError).toBeTruthy();
+    expect(stream.read(5)).toBe('hello');
+    expect(stream.position).toEqual(pos + 5)
 })
 
 test('parse a literal', () => {
     const p = P.str('hello');
-    const r = p(P.context('hello, world'));
+    const r = p(new P.Stream('hello, world'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe('hello');
+    expect(r).toBe('hello');
+})
+
+test('parse a literal (fail)', () => {
+    const p = P.str('hello');
+
+    expect(() => p(new P.Stream('123'))).toThrow();
 })
 
 test('parse a char from a set', () => {
-    const p = P.anyOfChar('efghij');
-    const r = p(P.context('hello, world'));
+    const p = P.anyOfChar('0123456789');
+    const r = p(new P.Stream('123'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe('h');
+    expect(r).toBe('1');
+})
+
+test('parse a char from a set (fail)', () => {
+    const p = P.anyOfChar('0123456789');;
+
+    expect(() => p(new P.Stream('hello, world'))).toThrow();
 })
 
 test('parse a sequence', () => {
     const p = P.sequence(P.str('hello'), P.str(', '), P.str('world'));
-    const r = p(P.context('hello, world'));
+    const r = p(new P.Stream('hello, world'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toStrictEqual(['hello', ', ', 'world']);
+    expect(r).toStrictEqual(['hello', ', ', 'world']);
 })
 
 test('parse a sequence (fail)', () => {
     const p = P.sequence(P.str('hello'), P.str('world'));
-    const r = p(P.context('hello, world'));
 
-    expect(r.isError).toBeTruthy();
+    expect(() => p(new P.Stream('hello, world'))).toThrow();
 })
 
 test('parse a choice', () => {
     const p = P.choice(P.str('hello'), P.str(', '), P.str('world'));
-    const r = p(P.context('hello, world'));
+    const r = p(new P.Stream('hello, world'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe('hello');
+    expect(r).toBe('hello');
 })
 
 test('parse an optional', () => {
     const p = P.optional(P.str('hello'));
-    const r = p(P.context('hello, world'));
+    const r = p(new P.Stream('hello, world'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBe('hello');
+    expect(r).toBe('hello');
 })
 
 test('parse an optional', () => {
     const p = P.optional(P.str('world'));
-    const r = p(P.context('hello, world'));
+    const r = p(new P.Stream('hello, world'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toBeNull();
+    expect(r).toBeNull();
 })
 
 test('parse many', () => {
     const p = P.many(P.str('world'));
-    const r = p(P.context('worldworld'));
+    const r = p(new P.Stream('worldworld'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toStrictEqual(['world', 'world']);
+    expect(r).toStrictEqual(['world', 'world']);
 })
 
 test('parse many as a string', () => {
-    const p = P.join(P.many(P.str('world')), 1);
-    const r = p(P.context('worldworld'));
+    const p = P.join(P.many(P.str('world')));
+    const r = p(new P.Stream('worldworld'));
 
-    expect(r.isError).toBeFalsy();
-    expect(r.result).toStrictEqual('worldworld');
+    expect(r).toBe('worldworld');
+})
+
+test('parse many digits', () => {
+    const r = P.many(P.anyOfChar('0123456789'))(new P.Stream('123'));
+
+    expect(r).toStrictEqual(['1', '2', '3'])
+})
+
+test('parse a float', () => {
+    const r = P.number(new P.Stream('123.123'));
+
+    expect(r).toBe('123.123');
 })

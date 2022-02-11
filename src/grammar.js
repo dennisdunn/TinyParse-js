@@ -1,19 +1,19 @@
 const L = require('../lib');
 const { AST } = require('./ast');
 
-const ws = parser => L.map(L.sequence(parser, L.optional(L.many(L.whitespace))), value => value[0]);
+const ignore_ws = parser => L.map(L.sequence(parser, L.optional(L.many(L.whitespace))), value => value[0]);
 
 const between = (...parsers) => L.map(L.sequence(...parsers), value => value[Math.floor(value.length / 2)]);
 
-const sop = ws(L.map(L.anyOfChar('+-'), AST.sop));
+const sop = ignore_ws(L.map(L.anyOfChar('+-'), AST.sop));
 
-const pop = ws(L.map(L.anyOfChar('*/'), AST.pop));
+const pop = ignore_ws(L.map(L.anyOfChar('*/'), AST.pop));
 
-const lpar = ws(L.map(L.str('('), AST.lparen));
+const lpar = ignore_ws(L.map(L.str('('), AST.lparen));
 
-const rpar = ws(L.map(L.str(')'), AST.rparen));
+const rpar = ignore_ws(L.map(L.str(')'), AST.rparen));
 
-const number = ws(L.map(L.number, AST.number));
+const number = ignore_ws(L.map(L.number, AST.number));
 
 function E(ctx) {
     return L.map(L.sequence(T, E1), AST.handler)(ctx);
