@@ -2,28 +2,39 @@
 ***Tiny Parse*** Combinator Library
 ===
 
+About
+---
 ***Tiny Parse*** is a parser combinator library in Javascript to provide examples for a presentation at [Stir Trek 2022](https://stirtrek.com).
 
 Installation
 ---
 Option #1
 ```bash
-npm --registry=https://npm.pkg.github.com install --save @dennisdunn/tiny-parse 
+npm --registry=https://npm.pkg.github.com install --save tiny-parse 
 ```
 
 Option #2
 ```bash
 echo @dennisdunn:registry=https://npm.pkg.github.com >> .npmrc
-npm install --save @dennisdunn/tiny-parse
+npm install --save tiny-parse
 ```
 
-Utility Functions
+Stream
 ---
-- context
-    - Given an input string, returns a context to pass to a parser.
+A stream consists of some text and a pointer into that text. If the ```length``` or
+```position``` arguments result in an invalid text pointer then an ```OutOfBoundsError```
+is thrown.
 
-Parser Generators
+- peek(length=1)
+    - Return some characters from the text without advancing the pointer.
+- read(length=1)
+    - Return some characters from the text and advance the pointer.
+- seek(position)
+    - Set the text pointer to the specified position.
+
+Base Parsers
 ---
+These parsers throw a ```SyntaxError``` if they fail to match.
 
 - anyOfChar
     - A parser which succeeds when the next character to be parsed is contained in the string argument.
@@ -50,12 +61,9 @@ Parser Combinators
     - Matches the argument 0 or 1 time. Always succeeds,
     potentially returning ```null``` as a result.
     - ```optional(anyOfChar(" \t\r\n"))```
-- between
-    - Matches all of the arguments and returns the result of the middle parser.
-    - ```between(open_bracket, expression, close_bracket)```
 - map
     - Tries to match the first argument and if successful, applies the second argument to the result.
-    - ```map(join(many(anyOfChar("0123456789"))), parseFloat)```
+    - ```map(many(anyOfChar("0123456789")), parseFloat)```
 
 ##### ***Utility Combinators***
 
@@ -82,5 +90,3 @@ Parsers
     - ```choice(lower, upper, digit)```
 - whitespace
     - ```anyOfChar(" \t\r\n")```
-- number
-    - ```sequence(digit, many(digit), optional(sequence(str("."), digit, many(digit)))```
