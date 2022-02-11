@@ -1,5 +1,5 @@
 
-const { str, anyOfChar, sequence, choice, optional, many, Stream, number, join } = require('../lib');
+const { str, anyOfChar, sequence, choice, optional, many, Stream, number, join, between } = require('../lib');
 
 test('parse a sequence', () => {
     const p = sequence(str('hello'), str(', '), str('world'));
@@ -57,6 +57,12 @@ test('parse many digits', () => {
 
 test('parse a float', () => {
     const r = number(new Stream('123.123'));
+
+    expect(r).toBe('123.123');
+})
+
+test('parse between the parens', () => {
+    const r = between(str('('), number, str(')'))(new Stream('(123.123)'));
 
     expect(r).toBe('123.123');
 })

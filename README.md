@@ -49,7 +49,7 @@ Parser Combinators
 ##### ***Essential Combinators***
 
 - sequence
-    - Returns a parser which matches all of the arguments  in order.
+    - Returns a parser which matches all of the arguments in order.
     - ```sequence(str("hello"), str(", "), str("world"))```
 - many
     - Matches the argument 0 or more times. Always succeeds, potentially returning ```[]``` as a result.
@@ -61,6 +61,9 @@ Parser Combinators
     - Matches the argument 0 or 1 time. Always succeeds,
     potentially returning ```null``` as a result.
     - ```optional(anyOfChar(" \t\r\n"))```
+- between
+    - Tries to match the arguments as in sequence and then returns the middle result.
+    -  ```between(str('('), number, str(')'))```
 - map
     - Tries to match the first argument and if successful, applies the second argument to the result.
     - ```map(many(anyOfChar("0123456789")), parseFloat)```
