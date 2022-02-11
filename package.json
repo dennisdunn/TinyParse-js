@@ -1,6 +1,6 @@
 {
   "name": "@dennisdunn/tiny-parse",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "description": "Minimal parser combinator library.",
   "main": "./lib/index.js",
   "repository": "https://github.com/dennisdunn/tiny-parse-js.git",

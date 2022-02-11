@@ -19,26 +19,22 @@ echo @dennisdunn:registry=https://npm.pkg.github.com >> .npmrc
 npm install --save tiny-parse
 ```
 
-Definitions
+Stream
 ---
+A stream consists of some text and a pointer into that text. If the ```length``` or
+```position``` arguments result in an invalid text pointer then an ```OutOfBoundsError```
+is thrown.
 
-- Parser
-    - A function which takes a context object and returns an object representing the structure of the input string.
-     - ```context => object```
-- Parser Generator
-    - A function that takes a string and returns a parser which parses all or part of that string.
-    - ```string => parser```
-- Parser Combinator
-    - A function that takes one or more parsers and returns a parser.
-    - ```(...parsers) => parser```
+- peek(length=1)
+    - Return some characters from the text without advancing the pointer.
+- read(length=1)
+    - Return some characters from the text and advance the pointer.
+- seek(position)
+    - Set the text pointer to the specified position.
 
-Utility Functions
+Base Parsers
 ---
-- context
-    - Given an input string, returns a context to pass to a parser.
-
-Parser Generators
----
+These parsers throw a ```SyntaxError``` if they fail to match.
 
 - anyOfChar
     - A parser which succeeds when the next character to be parsed is contained in the string argument.
@@ -78,7 +74,7 @@ Parser Combinators
     - Concatenate all of the items in the results array.
     - ```join(sequence(digit, many(digit)))```
 
-Parsers
+Pre-defined Parsers
 ---
 - digit
     - ```anyOfChar("0123456789")```
