@@ -14,8 +14,15 @@ test('parse a sequence (fail)', () => {
     expect(() => p(new Stream('hello, world'))).toThrow();
 })
 
-test('parse a choice', () => {
+test('parse a choice (matches first parser)', () => {
     const p = choice(str('hello'), str(', '), str('world'));
+    const r = p(new Stream('hello, world'));
+
+    expect(r).toBe('hello');
+})
+
+test('parse a choice (matches second parser)', () => {
+    const p = choice(str('world'), str(', '), str('hello'));
     const r = p(new Stream('hello, world'));
 
     expect(r).toBe('hello');
