@@ -4,7 +4,7 @@
 
 About
 ---
-***Tiny Parse*** is a parser combinator library in Javascript to provide examples for a presentation at [Stir Trek 2022](https://stirtrek.com).
+***Tiny Parse*** is a parser combinator library in Javascript to provide examples for the talk **Practical Parsing: Level Up With Parser Combinators**.
 
 Installation
 ---
