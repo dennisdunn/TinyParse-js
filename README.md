@@ -63,6 +63,9 @@ Parser Combinators
 - ignore
     - Always return null, effectivly ignoring the results of the parser.
     - ```ignore(anyOfChar(" \t\r\n"))```
+- exactly
+    - Applies a parser exactly **n** times.
+    - ```exactly(anyOfChar("0123456789"), 3)```
 
 ##### ***Utility Combinators***
 
