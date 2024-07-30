@@ -67,6 +67,9 @@ Parser Combinators
 - map
     - Tries to match the first argument and if successful, applies the second argument to the result.
     - ```map(many(anyOfChar("0123456789")), parseFloat)```
+- ignore
+    - Always return null, effectivly ignoring the results of the parser.
+    - ```ignore(anyOfChar(" \t\r\n"))```
 
 ##### ***Utility Combinators***
 
@@ -75,7 +78,7 @@ Parser Combinators
     - ```flat(many(str("hello")), 1)```
 - join
     - Concatenate all of the items in the results array.
-    - ```join(sequence(digit, many(digit)))```
+    - ```join(sequence(digit, join(many(digit))))```
 
 Parsers
 ---
